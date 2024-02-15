@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 import java.time.YearMonth
 
 @RestController
-@RequestMapping("/working-times")
+@RequestMapping("/api/working-times")
 @Tag(
         name = "근무시간",
         description = "온타임 근무시간 관련 Api",

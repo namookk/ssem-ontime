@@ -30,11 +30,12 @@ class SecurityConfig(final val authenticationManagerBuilder: AuthenticationManag
                 .authorizeHttpRequests {
                     it
                             .requestMatchers(
-                                    "/api-docs/json/**", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui/index.html", "/h2-console/**", "/auth/**",
-                                    "/webjars/**", "/swagger/**", "/health-check", "/time", "/error")
+                                    "/api/auth/**")
                             .permitAll()
-                            .anyRequest()
+                            .requestMatchers("/api/**")
                             .authenticated()
+                            .anyRequest()
+                            .permitAll()
                 }
                 .cors(withDefaults())
                 .headers { it.addHeaderWriter(XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)) }
