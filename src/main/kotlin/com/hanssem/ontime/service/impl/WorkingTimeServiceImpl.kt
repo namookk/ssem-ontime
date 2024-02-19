@@ -1,6 +1,7 @@
 package com.hanssem.ontime.service.impl
 
 import com.hanssem.ontime.payload.YN
+import com.hanssem.ontime.payload.domain.Calendar
 import com.hanssem.ontime.payload.domain.WorkingTime
 import com.hanssem.ontime.payload.domain.WorkingTimePK
 import com.hanssem.ontime.payload.dto.WorkingTimeDto
@@ -33,7 +34,7 @@ class WorkingTimeServiceImpl(
         val calendars = calendarRepository.findAllByWorkingDateBetween(startWorkingDate, endWorkingDate)
         val workingTimes = workingTimeRepository.findAllByStaffAndCalendarIn(staff, calendars)
 
-        val workingTimeMap = workingTimes.associateBy { it.calendar }
+        val workingTimeMap: Map<Calendar, WorkingTime> = workingTimes.associateBy { it.calendar }
         val result = arrayListOf<WorkingTimeDto>()
         for(calendar in calendars) {
             val workingTime:WorkingTime? = workingTimeMap.get(calendar)

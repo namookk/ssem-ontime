@@ -19,8 +19,6 @@ import javax.crypto.SecretKey
 
 @Service
 class JsonWebTokenServiceImpl(
-        @Value("\${jwt.secretKey}") secretKey: String,
-        @Value("\${jwt.refresh-secretKey}") refreshSecretKey: String,
         val refreshTokenRepository: RefreshTokenRepository
 ) : JsonWebTokenService {
     private val GRANT_TYPE = "Bearer"
@@ -31,8 +29,14 @@ class JsonWebTokenServiceImpl(
     private val EXPIRE_MIN = 10
     private val REFRESH_EXPIRE_MIN = 20160
 
-    private val secretKey: SecretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey))
-    private val refreshSecretKey: SecretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(refreshSecretKey))
+    @Value("\${jwt.secretKey}")
+    private lateinit var secretKeyStr: String
+
+    @Value("\${jwt.secretKey}")
+    private lateinit var refreshSecretKeyStr: String
+
+    private val secretKey: SecretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKeyStr))
+    private val refreshSecretKey: SecretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(refreshSecretKeyStr))
 
     override fun generateToken(staff: Staff): JsonWebTokenDto {
         val accessToken = createAccessToken(staff)

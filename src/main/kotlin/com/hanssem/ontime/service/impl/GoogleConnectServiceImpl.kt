@@ -12,8 +12,7 @@ import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 
 @Service
-class GoogleConnectServiceImpl(
-): GoogleConnectService{
+class GoogleConnectServiceImpl: GoogleConnectService{
 
     @Value("\${google.oauth2.url}")
     private lateinit var authUrl: String
